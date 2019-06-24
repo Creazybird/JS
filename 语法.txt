@@ -1,0 +1,272 @@
+1.个人代码风格：
+	1.1 建议一个函数最好不要超过200行，超过200行，想办法分割，封装，多做几个函数。
+
+js基础语法
+   1.JavaScript的语法和Java语言类似，每个语句都以‘;’结束，语句块用{ }
+	 自己写的时候以‘；’为语句的结束符
+	 js中的[]和{}都可看作对象 键值对
+	 
+   2.基本数据类型
+     2.1 number
+	 2.2 string(字符串)
+	 2.3 布尔值
+	 2.4 数组  [、、、、]
+	 2.5 对象  {key:value}  数组和对象在浏览器中都是object对象
+	
+	null 和undefined 没有本质的区别，都表示一个“空”值
+	
+	3.string 常用方法
+	   3.1 toUpperCase()
+	   3.2 toLowerCase()
+	   3.3  indexOf()
+		   indexOf()搜索指定字符串出现的位置
+		   var s='hello, world';
+		   s.indexOf('world'); //返回值为7 空格也算一位，从零开始   没有查找到world的位置则返回-1
+	   3.4 substring() 返回指定索引区间的子串
+		   var s='hello,world' 
+		   s.substring(0,5);从缩影0开始到5(不包括5)，返回hello
+		   s.substring(7); 从索引7开始到结束，返回“world”
+	   
+	4.JavaScript的Array可以包含任意数据类型，并通过索引来查找
+	   4.1 Array.length   长度属性
+	   4.2 Array.indexOf(xx)   所有一个指定的元素的位置
+		   var arr=[20,30,40]；
+		   arr.indexOf(20)； //元素的索引位0 ，如果没有找到索引位置 则返回-1
+	   4.3 slice() 对应String的substring()版本，他截取Array的部分元素，然后返回一个新的Array()
+	   4.4 push和pop 
+	       push()向Array的末尾添加若干元素，pop()则把Array的最后一个元素删除掉
+       4.5 unshift和shift
+		   unshift（）向Array的头部添加若干元素，shift()方法将Array数组的第一个元素删除掉
+	   4.6 sort reverse splice concat join   
+		
+	5.JavaScript的对象是一种无序的集合数据类型，它由若干键值对组成。
+	  var object={key：val}
+	  访问方式：object.key
+	  这里需要说明：实际上Java对象的所有属性都是字符串，不过属性对应的值可以是任意数据类型
+	  说白了所有的 key 都是字符串，value 可以是任意数据类型
+	   {name:'小明''} {name:1},{name：[1,3.3]}  
+	   js中访问不存在的key  那么返回的undefined	   
+	
+	6.循环	
+	   常用的循环方式：for( ; ; )
+	   介绍几个常用的循环方式：
+	   6.1 for...in 
+		  ## 它可以把一个对象的所有属性一次循环出来##
+		   **对象
+		   **所有的属性，得到所有的key值
+		  ##由于Array也是对象，而它的每个元素的索引被视为对象的属性，因此for ...in
+			循环可以直接循环出Array的索引
+			eg: var a={a:'I am is a',b:'I am is b',c:'I am is c',d:'I am is d'}
+				for(var item in a)
+					console.log(item) //得到的结果是key 值： a,b,c,d
+					console.log(a[item])//得到所有的value值。这个地方就不要a.item这种写法 这种写法在此处报错，原因不知道
+       6.2 while和do..while 不解释	
+	   6.3 iterable 迭代器
+	   无论是数组还是Map、Set 都可使用迭代器进行比遍历
+	   for ... of 
+	   最好使用foreach方法，它接受一个函数，每次迭代就自动回调该函数
+	   
+	   
+    
+    7.Map和Set数据结构
+		JS中的默认对象方式{} 可以看所其他语言的Map和Dictionary的数据结构，即一组键值对
+		这两个数据结构主要用来进行存储数据，方便查找操作。（js中原始的连个数据结构）
+		7.1 Map中默认带有set 和 get方法
+		
+	Map 和Set 已经不是上面五种的基本数据类型，而是比较高级的数据类型。主要用来存储数据
+	工作中主要涉及到的是Map与json 之间的转换
+	
+	8.方法
+		var xiaoming = {
+		name: '小明',
+		birth: 1990,
+		age: function () {
+			var y = new Date().getFullYear();
+			return y - this.birth;
+		}
+	};
+	绑定到对象上的函数称为方法，和普通函数也没啥区别，但是它在内部使用了一个this关键字
+	在一个方法的内部，this是一个特殊的变量，它始终指向当前对象，就是xiaoming这个变量，
+	所以 this.birth可以拿到xiaoming的birth属性
+	object(function(this.....))  没问题
+	object(function(this(function(this...))))没问题  如果是箭头函数，也没问题
+	
+	
+	9.高阶函数
+		JavaScript的函数其实都指向某个变量。既然变量可以指向函数，函数的参数能接受变量，那么一个
+		函数就可以接收另一个函数作为参数，这种函数就称为高阶函数。
+		一个简单的高阶函数:
+		function add(x,,y,f){
+			return f(x)+f(y);
+		}
+		
+		###一些常用的，已经封装好的函数###
+		map/reduce  分割合并
+		9.1 map
+		是对map/reduce思想的实现的两个函数。
+		  9.1.1  大白话  map()方法 属于数组类型  功能：可以对数组中的每个元素实现一个函数的功能。
+			  var arr=[1,3,5,7,8,9]；
+			  function mulitple(x){return 5*x}；
+			  var result=arr.map(mulitple)； 对数组中的每个元素实现了multiple函数功能。结果最终生成另外一个数组
+			  console.log(result)；
+			  //[5, 15, 25, 35, 40, 45]
+			  
+			总结：arr.map(函数(x1))
+		
+		
+		9.2 reduce
+		同样作用与Array上  。Array的reduce()把一个函数作用在这个Array的[x1, x2, x3...]上，这个函数必须接收两个参数，
+		reduce()把结果继续和序列的下一个元素做累积计算，其效果就是：
+		[x1,x2,x3,x4].reduce(f)=f(f(f(x1,x2),x3),x4) 
+			9.2 大白话
+			   就是对数组的一个合并过程 递归合并的过程
+			   arr.reduce(函数(x1,x2))   合并的reduce中的函数参数的必须有连个必填参数（x1,x2）
+					var arr=[1,2,3];
+					function mulitple(a,b){var sum= a+b;return sum};
+					var result=arr.reduce(mulitple);
+					console.log(result);//结果是6 实现了累加效果
+				
+					var arr=[1,2,5];
+					function mulitple(a,b){var sum= a*b;return sum};
+					var result=arr.reduce(mulitple);
+					console.log(result);//结果是10 实现了累乘效果
+				
+		9.3 filter 
+		也是作用与Array上，用于把Array的某些元素过滤掉，然后返回剩下的元素。
+		和map()类似，Array的filter()也接收一个函数。和map()不同的是，filter()把传入的函数依次作用于每个元素，
+		然后根据返回值是true还是false决定保留还是丢弃该元素  返回true 是保存该元素 ，false 是过滤掉
+			9.3 去掉数组中某些具有共性的元素， 共性=》函数
+			  去掉重复元素：
+			  var arr=['apple', 'strawberry', 'banana', 'pear', 'apple', 'orange', 'orange', 'strawberry'];
+			  var r = arr.filter(function (element, index, self) {
+							return self.indexOf(element) === index;
+						});
+			   console.log(r.toString())  //结果：'apple', 'strawberry', 'banana', 'pear', 'orange', 
+			   
+		9.4 sort 
+		也用于Array 属于Array的一种方法					
+		  用法与map 和reduce类似
+		  
+		9.5 其他的Array的高阶函数：every,find,findIndex,forEach  
+		forEach()常用于遍历数组，因此，传入的函数不需要返回值
+			var arr = ['Apple', 'pear', 'orange'];
+			arr.forEach(console.log); // 依次打印每个元素
+			
+	10.闭包
+	    高阶函数除了可以接受函数作为参数外，还可以把函数作为结果返回  这种形式就是闭包
+		
+		返回闭包时牢记的一点就是：返回函数不要引用任何循环变量，或者后续会发生变化的变量
+		
+    11.标准对象：Date  RegExp   JSON
+	 JSON是JavaScript Object Notation的缩写，它是一种数据交换格式.
+		 11.1   JSON字符串  --> JSON.parse(JSON字符串) ==>JavaScript 对象   这个过程叫做反序列化 
+		        一般在请求中的body 传输数据，无论是获得还是发送 body的数据类型是Json字符串
+	     11.2  JavaScript对象--> JSON.stringify(JavaScript对象) ==>JSON字符串  这个过程叫做序列化
+			
+		一般来说，通过请求获得数据后，要做一次转化 将JSON字符串转换成js对象
+				  通过请求提交数据时，要做一次转化，将js对象转换成JSON字符串，而后方道body中
+				  
+    12.面向对象编程(js面向对象，js语法简直是垃圾啊)
+		12.1 创建对象  看廖雪峰的网站
+		12.2 原型继承
+		12.3 class继承 
+		由于ES6中 将class关键字 正式被引入到js中。
+		     1.创建对象
+			
+				原先：
+				function Student(name) {    //构造函数
+					this.name = name;
+				}
+
+				Student.prototype.hello = function () {
+					alert('Hello, ' + this.name + '!');
+				}
+				
+				在es6中：
+				class Student {
+					constructor(name) {
+						this.name = name;
+					}
+
+					hello() {
+						alert('Hello, ' + this.name + '!');
+					}
+				}
+				var xiaoming = new Student('小明');
+                xiaoming.hello();
+				
+			2.class继承（虽然你很好，但是现在主流的浏览器还不支持class关键字）
+				通过class定义一个对象的一个函数就是继承更方便，通过关键字extends就行。
+				class PrimaryStudent extends Student {
+					constructor(name, grade) {
+						super(name); // 记得用super调用父类的构造方法!
+						this.grade = grade;
+					}
+
+					myGrade() {
+						alert('I am at grade ' + this.grade);
+					}
+				}
+				注意PrimaryStudent的定义也是class关键字实现的，而extends则表示原型链对象来自Student。
+				子类的构造函数可能会与父类不太相同，例如，PrimaryStudent需要name和grade两个参数，
+				并且需要通过super(name)来调用父类的构造函数，否则父类的name属性无法正常初始化
+	13.浏览器对象			  
+     	1.window       window.innerWidth     window.innerHeight    浏览器窗口的宽高  通过这连个方法获取浏览器的宽高
+		2.navigator     获取浏览器的属性
+			navigator.appName：浏览器名称；
+			navigator.appVersion：浏览器版本；
+			navigator.language：浏览器设置的语言；
+			navigator.platform：操作系统类型；
+			navigator.userAgent：浏览器设定的User-Agent字符串。
+		3.screen对象 表示屏幕的信息，常用的属性有：
+			screen.width：屏幕宽度，以像素为单位；
+			screen.height：屏幕高度，以像素为单位；
+			screen.colorDepth：返回颜色位数，如8、16、24。
+			
+		//下面三个常用	
+		4.location
+		  location 对象表示当前页面的URL信息。例如，一个完整的URL
+		  location.href  获得当前浏览器窗口的url地址
+		  location.assign(xx)  加载一个新页面  location.assign('https://www.baidu.com')
+		  location.reload() 重新加载当前页面   location.reload()
+		  "https://www.liaoxuefeng.com/wiki/1022910821149312/1023022272084160"
+	        location.protocol; // 'http'
+			location.host; // 'www.example.com'
+			location.port; // '8080'
+			location.pathname; // '/path/index.html'
+			location.search; // '?a=1&b=2'
+			location.hash; // 'TOP'
+			
+		5.document
+			1.document 对象提供的getElementById()和getElementsByTagName()可以按ID获得一个DOM节点和按Tag名称
+			  获得一组DOM节点：   
+			  按id获得一个DOM节点
+			  按Name获得一组名字相同的DOM节点
+			2.document对象还有一个cookie属性，可以获取当前页面的Cookie
+				document.cookie
+			Cookie是由服务器发送的key-value标示符。因为HTTP协议是无状态的，
+			但是服务器要区分到底是哪个用户发过来的请求，就可以用Cookie来区分。当一个用户成功登录后，
+			服务器发送一个Cookie给浏览器，例如user=ABC123XYZ(加密的字符串)...，此后，浏览器访问该网站时，
+			会在请求头附上这个Cookie，服务器根据Cookie即可区分出用户。
+			一般用户的登录信息就存储在Cookie中。
+			为了防止cookie中的信息被第三方恶意js读取。服务器在设置Cookie时可以使用httpOnly，设定了httpOnly的
+			Cookie将不能被JavaScript读取。
+			
+		6.history
+		    history对象保存了浏览器的历史纪录
+			JavaScript可以调用history对象的back()和forward() 相当于用户点击浏览器的后退和前进
+			
+	14 操作DOM
+		1.更新dom
+		一种是修改innerHTML属性，这个方式非常强大，不但可以修改一个DOM节点的文本内容，
+		还可以直接通过HTML片段修改DOM节点内部的子树：
+		// 获取<p id="p-id">...</p>
+		var p = document.getElementById('p-id');
+		// 设置文本为abc:
+		p.innerHTML = 'ABC'; // <p id="p-id">ABC</p>
+		// 设置HTML:
+		p.innerHTML = 'ABC <span style="color:red">RED</span> XYZ';
+		// <p>...</p>的内部结构已修改
+		
+		
+	//剩下的没看。。。。。。	
