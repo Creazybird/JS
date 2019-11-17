@@ -8,3 +8,4 @@ fs.readdir('E:/仓库/JS/JS_Practice',function(err,files){
         console.log(files)
     }
 })
+//其实可以发现整个vue.js的源码由TypeScript.js写的
