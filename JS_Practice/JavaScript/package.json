@@ -1,0 +1,17 @@
+{
+  "name": "JavaScript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Promise.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "app":"node ./module/app.js"
+    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

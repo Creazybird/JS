@@ -9,7 +9,7 @@ const fs=require('fs')
                          error 错误对象
 */
 
-fs.readFile('E:/仓库/JS/JS_Practice/Node.js/note.md',(err,data)=>{
+fs.readFile('E:/仓库/JS/JS_Practice/JavaScript/static_book/JavaScript/1.pdf',(err,data)=>{
     if(err) throw err;
     console.log(data.toString());
 })

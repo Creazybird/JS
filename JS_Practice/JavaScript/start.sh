@@ -1,0 +1,1 @@
+nohup node run app
