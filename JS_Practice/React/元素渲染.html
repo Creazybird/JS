@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <div id="example1"></div>
+    <div id="example_Component"></div>
+    <script type="text/babel">  //比不可少 ，而且只能用id getElementId
+        const element=<h1>Hello World</h1>
+        const element1=<h1>Hello1 World1</h1>
+
+        function tick(){
+            const element=(    //相当于一个html模板，，这里是什么js语法，暂时没弄懂
+                <div>
+                    <h1>引入html</h1>
+                    <h2>现在是{new Date().toLocaleTimeString()}</h2>
+                </div>
+            );
+            ReactDOM.render(
+                element,
+                document.getElementById('example')
+            )
+        }
+
+        ReactDOM.render(
+            element,
+            document.getElementById('example')
+        )
+        ReactDOM.render(
+            element1,
+            document.getElementById('example1')
+        )
+        /*我们用React开发应用时一般只定义一个根节点。但如果你是在一个已有的项目当中
+        引入React的话，你可能回需要在不同的部分单独定义React根节点*/
+
+        setInterval(tick,1000)  //React元素是不可变的。当元素被创建之后，你是无法改变其内容或属性的
+                                // 目前更新界面的唯一办法是创建一个新的元素，然后将它传入ReactDOM.render()方法；
+
+
+
+        //使用React.Component 需要注意的是在render()方法中，需要使用this.props替换props:
+        class Tem extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <h1>使用Component</h1>
+                        <h2> 现在是：{this.props.date.toLocaleTimeString()}</h2>
+                    </div>
+                )
+            }
+        }
+        function ComponentTest() {
+            ReactDOM.render(
+                <Tem date={new Date()}></Tem>,//类似vue中的父子组件传值
+                document.getElementById('example_Component')
+            );
+        }
+        ComponentTest()
+    </script>
+</body>
+</html>
+
+

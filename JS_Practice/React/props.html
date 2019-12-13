@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+   <div id="example"></div>
+   <div id="example1"></div>
+   <div id="example2"></div>
+   <div id="example_state_props"></div>
+   <script type="text/babel">
+    //通过class产生的组件传参
+    class HelloMessage extends React.Component{
+        render() {
+            return (
+                <h1>Hello {this.props.name}</h1>
+            )   
+        }
+    }
+    const element=<HelloMessage name='千辛万苦'/>
+    
+    ReactDOM.render(
+        element,
+        document.getElementById('example')
+    )
+
+    //使用方法产生的组件传参
+    function HelloMessage1(props){
+        return <h1>funciton创建组件{props.name}</h1>
+    }
+    const element1=<HelloMessage1 name='春去春回来'/>
+    ReactDOM.render(
+        element1,
+        document.getElementById('example1') 
+    )
+
+    //设置默认Props
+    class HelloMessage2 extends React.Component{
+        render(){
+            return (
+                <h1>不急不燥{this.props.name}</h1>
+            )
+        }
+    }
+
+    HelloMessage2.defaultProps={
+        name:'默认值'
+    }
+    const element2=<HelloMessage2/> //这个时候就没有往子组件传值
+
+    ReactDOM.render(
+        element2,
+        document.getElementById('example2')
+    )
+
+    //state与props组合使用
+    class Parent extends React.Component{
+        constructor(){
+            super();
+            this.state={
+                name:'风声在沙沙作响',
+                count:1,
+            }
+        }
+        render(){
+            return(
+                <div>
+                <Name name={this.state.name}/>
+                <Link count={this.state.count}/>
+                </div>
+            )
+        }
+    }
+
+    class Name extends React.Component{
+        render(){
+            return(
+                <h1>{this.props.name}</h1>
+            )
+        }
+    }
+
+    class Link extends React.Component{
+        render(){
+            return(
+                <h1>{this.props.count}</h1>
+            )
+        }
+    }
+    const element3=<Parent/>
+    ReactDOM.render(
+        element3,
+        document.getElementById('example_state_props')
+    )
+    </script>
+</body>
+</html>
+
+

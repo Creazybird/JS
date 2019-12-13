@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        css3新属性，作用：向元素应用2d向3d转换。该属性允许我们对元素进行旋转、缩放、移动
+        或者倾斜
+        实现一个圆形硬币的旋转
+     -->
+     <div class='rotate-wrap'>
+        <div class='front circle' style="transform:translateZ(1px)"></div>
+        <div class="reverse circel" ></div>
+     </div>
+     <style>
+     .rotate-wrap{
+         width: 100px;
+         height: 100px;
+         margin:100px;
+         transform-style: preserve-3d;
+         animation: rotate 5s linear infinite;
+         position: relative;
+     }
+     .rotate-wrap:hover{
+         animation-play-state: paused;
+     }
+     .rotate-wrap .front,.rotate-wrap .reverse{  /* 父div rotate  子div：fontj*/
+         width: 100px;
+         height: 100px;
+         background-size: cover;
+     }
+     .rotate-wrap .front{
+         position: absolute;
+         top:0;
+         left:0;
+         bottom:0;
+         right: 0;
+         background-image:  url('https://picsum.photos/id/935/100/100');
+     }
+     .rotate-wrap .reverse{
+        background-image: url('https://picsum.photos/id/835/100/100');
+     }
+     @keyframes rotate {
+         0%{
+             transform: rotateY(0deg);
+         }
+         100%{
+             transform: rotate(360deg);
+         }
+     }
+     </style>
+</body>
+</html>

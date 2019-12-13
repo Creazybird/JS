@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- react中使用事件好像有点麻烦 -->
+    <div id='example'></div>
+    <div id='example1'></div>
+    <script type="text/babel">
+        class Toggle extends React.Component{
+            constructor(props){
+                super(props)
+                this.state={isFlage:true}
+                this.handleClick=this.handleClick.bind(this)
+            }
+            handleClick(){
+                // this.setState(function (state) {
+                //     state.isFlage=!state.isFlage
+                //     console.log(state.isFlage)
+                //     //这样造成的是异步写法，数据更新了，但是view层的数据没有改变
+                // })
+                this.setState((preState,props)=>({
+                     isFlage:!preState.isFlage
+                }))//傻逼语法，我尼玛是搞不懂了
+            }
+            render(h) {
+                return(
+                    <div>
+                        <button onClick={this.handleClick}>点我啊</button>
+                        <div>{this.state.isFlage===true?'开':'关'}</div>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <Toggle/>,
+            document.getElementById('example')
+        )
+
+        //向事件处理程序传递参数
+        class Poper extends React.Component{
+            constructor(){
+                super();
+                this.state={name:'Hello world'}
+            }
+
+            preventPop(name,e){
+                e.preventDefault();
+                alert(name)
+            }
+            render(){
+                return(
+                    <div>
+                        <p>hello</p>
+                        {/*通过bind()方法传递参数
+                            下面的这种写法才是常规的写法
+                        */}
+                        <a href="https://reactjs.org" onClick={this.preventPop.bind(this,this.state.name)}>Click</a>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <Poper></Poper>,
+            document.getElementById('example1')
+        )
+    </script>
+</body>
+</html>
+
+

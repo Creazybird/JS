@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id='example'></div>
+    <div id='example1'></div>
+    <script type='text/babel'>
+        //使用map遍历
+        const numbers=["women",'s',3,4,5]
+        const listItem=numbers.map((data)=>{
+             data=<li>{data}</li>
+             return data
+        })
+        /*等价于*/
+        // const listItem=numbers.map(data=><li>{data}</li>)
+        ReactDOM.render(
+            <ul>{listItem}</ul>,
+            document.getElementById('example')
+        )
+
+        //需要为每个列表元素分配一个key,不然回出现警告 a key should be provided for list items
+        class NumberList extends React.Component{
+            render(){
+                const Listnumbers=this.props.Listnumbers
+                // const LList=Listnumbers.map(data=>
+                //     <li key={data.toString()}>{data}</li>
+                // )
+                //或者采用下面这种形式更为普遍
+                const LList=Listnumbers.map((data,index)=>{
+                    return <li key={data.toString()}>{data}</li>
+                })
+                return(
+                    <ul>{LList}</ul>
+                )
+            }
+        }
+        const Listnumbers=[1,2,3,4,5]
+        ReactDOM.render(
+            <NumberList Listnumbers={Listnumbers}/>,
+            document.getElementById('example1')
+        )
+    </script>
+</body>
+</html>
+
+

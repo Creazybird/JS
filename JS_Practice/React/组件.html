@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+
+    <div id="example"></div>
+    <div id="example1"></div>
+    <div id="example_props"></div>
+    <div id="example_composite"></div>
+    <script type="text/babel">
+        function HelloMessage(props) {   //1.用方法的形式定义一个组件，使用props传递参数
+            return <h1>Hello World</h1>
+        };
+        const element=<HelloMessage></HelloMessage>        
+        ReactDOM.render(
+            element,
+            document.getElementById('example')
+        )
+
+        class Singer extends React.Component{   //2.使用伪类class来定义一个组件,这种方式使用最多
+            render(){
+                return <h1>周华健</h1>
+            }
+        }
+        const element1=<Singer/>
+        ReactDOM.render(
+            element1,
+            document.getElementById('example1')
+        )
+
+        class Movier extends React.Component{   //3.往自组件传递参数（用class创建的组件），使用函数创建的组件传参方式跟这个一样
+            render(){
+                return <div>电影的名字：{this.props.name}</div>
+            }
+        }
+        const element2=<Movier name="雨人"/>
+        ReactDOM.render(
+            element2,
+            document.getElementById('example_props')
+        )
+
+
+
+        //复合组件
+        class  Music extends React.Component{
+            render(){
+                return <div>音乐类型：{this.props.category}</div>
+            }
+        }
+        class Gender extends React.Component{
+            render(){
+                return  <div>歌手性别：{this.props.gender}</div>
+            }
+        }
+        class Name extends React.Component{
+            render(){
+                return  <div>歌名：{this.props.song}</div>
+            }
+        }
+
+        class App extends React.Component{
+            render(){
+                return (<div>
+                        <Music category='抒情'></Music>
+                        <Gender gender='男'></Gender>
+                        <Name song='逍遥游'></Name>
+                        <div>根元素</div>
+                    </div>)
+            }
+        }
+        ReactDOM.render(
+            <App />,
+            document.getElementById('example_composite')
+        );
+    </script>
+</body>
+</html>

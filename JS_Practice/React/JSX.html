@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <div id="example_1" ></div>
+    <div id="example_css"></div>
+    <div id="example_note"></div>
+    <div id="example_arr"></div>
+    <script type="text/babel">    
+        //我们可以早JSX中使用JavaScript表达式。表达式写在花括号{}中
+        ReactDOM.render(
+            <div>
+                <h1>{1+9}</h1>
+            </div>,
+            document.getElementById('example')
+        )
+
+        //在JSX中不能使用if else语句，但可以使用(三元运算符)
+        var i=1;
+        ReactDOM.render(
+            <div>
+                <h1>{i==1?"TRUE":'False'}</h1>
+            </div>,
+            document.getElementById('example_1')
+        )
+
+        //样式，React推荐使用内联样式。我们可以使用驼峰写法来设置内联样式，React会在指定元素后自动添加px
+        var myStyle={
+            fontsize:100,
+            color:"#FF0000"
+        }
+        ReactDOM.render(
+            <h1 style={myStyle}>
+                灯火辉煌的街头
+            </h1>,
+            document.getElementById('example_css')
+        )
+
+        //注释,JSX写注释，需要写在花括号中
+        ReactDOM.render(
+            <div>
+                <h1>神话</h1>
+                    {/*
+                        在这里写入注释
+                    */}
+            </div>,
+            document.getElementById('example_note')
+
+        )
+        
+        //数组
+        var arr=[
+            <div>第一个数组</div>,
+            <div>第二个数组</div>,
+            <div>第三个数组</div>,
+            <div>第四个数组</div>,
+            <div>第五个数组</div>,
+            <div>第六个数组</div>
+        ]
+        ReactDOM.render(
+            <div>{arr}</div>,
+            document.getElementById('example_arr')
+        )
+    </script>
+</body>
+</html>
+
+
