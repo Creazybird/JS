@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+   <div id='app'>
+        <child-component>你好啊</child-component>
+        <child-component1>关中
+            <template slot-scope="test1">
+                {{test1}}
+            </template>
+        </child-component1>
+        <child-component2>
+            <template  slot-scope="test2">
+                {{test2}}
+            </template>
+        </child-component2>
+        <!-- element-ui table的实现方式 -->
+        <child-component3 :table='listname'>
+            <template slot-scope="test3">
+                {{test3.row}}
+            </template>
+        </child-component3>
+   </div> 
+   <script>
+    // 基于vue2.6.10版本
+       Vue.component('child-component',{
+           template:`
+           <div>Hello,World
+            <slot></slot>
+            </div>
+           `
+       })
+       Vue.component('child-component1',{
+           template:`
+           <div>
+           <slot am="saying"></slot>
+           </div>
+           `
+       })
+       Vue.component('child-component2',{
+           template:`
+           <div>
+                <slot :am='sayingGoodbye'></slot>
+            </div>
+           
+           `,
+           data(){
+            return{
+                sayingGoodbye:'hello world' 
+            }
+           }
+       })
+       Vue.component('child-component3',{
+            props:{
+                table:Array  //props 的属性命名最好不要有大写字母，关于这点我只想问候你大爷
+            },
+            template:`
+            <div>
+                    <div v-for="item in table">
+                        <slot :row="item"></slot>
+                    </div>
+            </div>
+        `
+       })
+       let vm=new Vue({
+           el:'#app',
+           data:{
+            listname:[{
+                       id:"程志平",
+                       gender:'男'
+                   },{
+                       id:"程志平32",
+                       gender:'女'
+                   }]
+           }
+       })
+   </script>
+
+</body>
+</html>
+
