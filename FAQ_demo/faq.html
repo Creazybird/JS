@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <title>Document</title>
+    <script src="./data.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p style="margin:20px 0 0 20px;font-size:18px;font-weight: bold">系统常见问题FAQ</p>
+        </header>
+        <section>
+            <p style="margin:20px 0 0 20px;font-size:12px;">
+                检索：<input type="text" onkeyup="search(this.value)">
+            </p>
+        </section>
+        <section>
+            <ul></ul>
+        </section>
+    </div>
+    <script>
+        var List=List
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var dom=document.getElementsByTagName('ul')[0]
+            for(var i=0;i<List.length;i++)
+            {
+                var temp_dom=document.createElement('li')
+                var son_dom=document.createElement('p')
+                    son_dom.id=List[i].id
+                    son_dom.className='sub_title'
+                    son_dom.textContent=List[i].title
+                    son_dom.addEventListener('click',function(e){
+                        detail(e.target.id)
+                    })
+                    temp_dom.appendChild(son_dom)
+                    dom.appendChild(temp_dom)
+            }
+            //下面这个代码一定是要在最后面做判断，因为前面需要等li这些数据构建完成
+            if(document.getElementsByTagName('input')[0].value){
+                search(document.getElementsByTagName('input')[0].value)
+            }
+        });
+        function detail(id){
+            var target={}
+            for(var item of List){
+                if(item.id===id){
+                    target=item
+                }
+            }
+            window.location.href=`./template/detail.html?id=${target.id}`
+        }
+        function search(value){
+            var res=[]
+            if(value===''){
+               render(List)
+            }
+            for(var i=0;i<List.length;i++){
+                if(List[i].title.indexOf(value)>=0){
+                    res.push(List[i])
+                }
+            }
+            render(res)
+        }
+
+        function render(res){
+            var dom=document.getElementsByTagName('ul')[0]
+            var childs=dom.childNodes
+            for(var i = childs.length - 1; i >= 0; i--) {
+                dom.removeChild(childs[i]);
+            }
+            for(var i=0;i<res.length;i++)
+            {
+                var temp_dom=document.createElement('li')
+                var son_dom=document.createElement('p')
+                    son_dom.id=res[i].id
+                    son_dom.className='sub_title'
+                    son_dom.textContent=res[i].title
+                    son_dom.addEventListener('click',function(e){
+                        detail(e.target.id)
+                    })
+                    temp_dom.appendChild(son_dom)
+                    dom.appendChild(temp_dom)
+            }
+        }
+
+    </script>
+    <style>
+    ul{
+        margin:0;
+        padding:0;
+    }
+    li{
+        list-style:none;
+        margin:2.7% 2.7% 2.7% 2.7%;
+        background: #FFFFFF;
+        border: 1px solid #E4E4E4;
+        border-radius: 12px;
+        border-radius: 12px;
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #333333;
+    }
+    .sub_title{
+        margin:12px;
+        line-height:24px
+    }
+    .html,body{
+        margin:0;
+        padding:0;
+    }
+    .container{
+        background-color:#fafafa;
+        width:100%;
+        min-height: 100vh;
+        position: absolute;
+    }
+    .small_img,.big_img {
+        cursor: pointer;
+    } 
+    .black_overlay{ 
+        display: none; 
+        position: fixed;     
+        top: 0%; 
+        left: 0%; 
+        width: 100%; 
+        height: 100%; 
+        background-color: black; 
+        z-index:1001; 
+        -moz-opacity: 0.8; 
+        opacity:.80; 
+        filter: alpha(opacity=80);  
+    } 
+    .big_img { 
+        display: none; 
+        position: fixed; 
+        width: 80%;
+        height: auto;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index:1002; 
+        overflow: auto; 
+    }
+    </style>
+</body>
+</html>
