@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <script src="../data.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- <header>
+            <div class="arrow-box" onclick="javascript:history.back(-1);">
+                <div class="arrow"></div><div class="stick"></div>
+            </div>
+        </header> -->
+        <section>
+            <ul>
+                <li>     
+                </li>
+            </ul>
+        </section>
+    </div>
+    <script>
+        var List=List
+        function enlarge(pictureId) {
+            let imgDom=`light_${pictureId}`
+            let fadeDom=`fade_${pictureId}`
+            document.body.style.overflow='hidden'
+            document.body.style.height='600px'
+            document.getElementById(imgDom).style.display='block'
+            document.getElementById(fadeDom).style.display='block'
+        }
+        function narrow() {
+            var imgDom=document.getElementsByClassName('big_img')
+            var fadeDom=document.getElementsByClassName('black_overlay')
+            for(var i=0;i<imgDom.length;i++)
+            {
+                imgDom[i].style.display='none'
+                fadeDom[i].style.display='none'
+            }
+        }
+        
+        function getUrlkey(url){
+            var params = {},
+                arr = url.split("?");
+            if (arr.length <= 1)
+                return params;
+            arr = arr[1].split("&");
+            for(var i=0, l=arr.length; i<l; i++){
+                var a = arr[i].split("=");
+                params[a[0]] = a[1];
+            }
+            return params;
+        }
+        function getData(id) {
+            var target={}
+            for(var item of List){
+                if(item.id===id){
+                    target=item
+                }   
+            }
+            return target
+        }
+        function render(data) {
+            var dom=document.getElementsByTagName('li')[0]
+            var title_dom=document.createElement('p')
+            title_dom.textContent=data.title
+            dom.appendChild(title_dom)
+            if(data.picture&&data.picture.length>=1){
+                for(var i=0;i<data.picture.length;i++){
+                    var tem_dom=document.createElement('p')
+                    var img_dom_small=document.createElement('img')
+                    img_dom_small.className="small_img"
+                    img_dom_small.id=`${data.id}_${i}`
+                    img_dom_small.src=data.picture[i]
+                    img_dom_small.width="200"
+                    img_dom_small.height="200"
+                    img_dom_small.addEventListener('click',function (e) {
+                        enlarge(e.target.id)
+                    })
+                    tem_dom.appendChild(img_dom_small)
+
+                    var fade_dom=document.createElement('div')
+                    fade_dom.className="black_overlay"
+                    fade_dom.id=`fade_${data.id}_${i}`
+                    fade_dom.addEventListener('click',function (e) {
+                        narrow()
+                    })
+                    tem_dom.appendChild(fade_dom)
+
+                    var img_dom_large=document.createElement('img')
+                    img_dom_large.className="big_img"
+                    img_dom_large.id=`light_${data.id}_${i}`
+                    img_dom_large.src=data.picture[i]
+                    img_dom_large.addEventListener('click',function (e) {
+                        narrow()
+                    })
+                    tem_dom.appendChild(img_dom_large)
+
+                    dom.appendChild(tem_dom)
+                }
+            }
+            var solution_dom=document.createElement('p')
+            solution_dom.textContent=data.solution
+            dom.appendChild(solution_dom)
+        }
+
+        var param=getUrlkey(window.location.href)
+        var id=unescape(param['id'])
+        var data=(getData(id))
+        render(data)
+        
+    </script>
+    <style>
+    .html,body{
+        margin:0;
+        padding:0;
+    }
+    ul{
+        margin:0;
+        padding:0;
+    }
+    li{
+        list-style:none;
+        margin:2.7% 2.7% 2.7% 2.7%;
+        background: #FFFFFF;
+        border: 1px solid #E4E4E4;
+        border-radius: 12px;
+        border-radius: 12px;
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #333333;
+        line-height: 32px;
+    }
+    p{
+        margin:12px;
+        line-height:24px
+    }
+    .container{
+        background-color:#fafafa;
+        width:100%;
+        min-height: 100vh;
+        position: absolute;
+    }
+    .small_img,.big_img {
+        cursor: pointer;
+    } 
+    .black_overlay{ 
+        display: none; 
+        position: fixed;     
+        top: 0%; 
+        left: 0%; 
+        width: 100%; 
+        height: 100%; 
+        background-color: black; 
+        z-index:1001; 
+        -moz-opacity: 0.8; 
+        opacity:.80; 
+        filter: alpha(opacity=80);  
+    } 
+    .big_img { 
+        display: none; 
+        position: fixed; 
+        margin:0 auto;
+        width: 80%;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        margin-left:-40%;
+        transform: translateY(-50%);
+        z-index:1002; 
+        overflow: auto; 
+    }
+    .arrow-box{
+        margin:2.7% 0 0 2.7%;
+        width: 32px; 
+        height: 32px;
+        position: relative; 
+        border-radius: 50%; 
+        background: #6262bd; 
+    }
+    .arrow{
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+        transform: rotate(-135deg);
+        margin: auto;
+        position: absolute; 
+        top: 0; 
+        left: 12px; 
+        bottom: 0; 
+    }
+    
+    </style>
+</body>
+</html>
